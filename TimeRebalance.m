@@ -15,10 +15,12 @@ if mod(Year,Frequency)==0
         Rebalance = 1;
     else
         Rebalance = 0;
+        ResetAssetAllocation = 0;
     end
     
 else
     Rebalance = 0;
+    ResetAssetAllocation = 0;
 end
 
 end
