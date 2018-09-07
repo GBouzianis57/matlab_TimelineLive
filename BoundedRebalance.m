@@ -1,7 +1,8 @@
-function [Rebalance, maxDiff, ResetAssetAllocation] = BoundedRebalance(AllocationGP, CurrentAllocation ,ClassesBoundaries, Id, ClassesNames)
+function [Rebalance, maxDiff, ResetAssetAllocation] = BoundedRebalance(AllocationGP, CurrentAllocation ,ClassesBoundaries, Id, ClassesNames, ClassID)
 %Rebalance check excel tab
 Difference = abs(CurrentAllocation - AllocationGP)> ClassesBoundaries;
 maxDiff = max(abs(CurrentAllocation - AllocationGP));
+ResetAssetAllocation = zeros(1,numel(ClassID));
 
 if sum(Difference)>0
     
@@ -21,17 +22,17 @@ if sum(Difference)>0
         if AllocationReset == 1
             ResetAssetAllocation = input('Type the new portfolio asset allocation in the form of a mattrix: ');
         else
-            ResetAssetAllocation = 0;
+            ResetAssetAllocation(:) = 0;
         end
         Rebalance = 1;
     else
         Rebalance = 0;
-        ResetAssetAllocation = 0;
+        ResetAssetAllocation(:) = 0;
     end
     
 else
     Rebalance=0;
-    ResetAssetAllocation = 0;
+    ResetAssetAllocation(:) = 0;
 end
 
 

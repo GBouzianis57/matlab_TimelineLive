@@ -62,10 +62,10 @@ end
 
     function [NewAllocation,Rebalance , HarvestingAmmount , MaximumDifference] = RebalancingDetermination(RebalancingRule, AllocationGP, ClassesBoundaries, Frequency, ClassesReturns, PerformanceRebalancing, CurrentAllocation, ClassesPVBoundary, SimpleInflationIndex,InitialAllocation,BuyClasses,StartValue,ClassID,SellClasses,IIDifference,i,Id,ClassesNames)
         if RebalancingRule == 4
-                [Rebalance,MaximumDifference,NewAllocation] = BoundedRebalance(AllocationGP, CurrentAllocation,ClassesBoundaries, Id, ClassesNames);
+                [Rebalance,MaximumDifference,NewAllocation] = BoundedRebalance(AllocationGP, CurrentAllocation,ClassesBoundaries, Id, ClassesNames, ClassID);
                  HarvestingAmmount = 0;
         elseif RebalancingRule == 1
-                [Rebalance,NewAllocation] = TimeRebalance(Frequency,i, Id);
+                [Rebalance,NewAllocation] = TimeRebalance(Frequency,i, Id, ClassID);
                  HarvestingAmmount = 0;
                  MaximumDifference = 0;
         elseif RebalancingRule == 0
@@ -73,11 +73,11 @@ end
                 HarvestingAmmount = 0;
                 MaximumDifference = 0;
         elseif RebalancingRule == 2  
-                [Rebalance,NewAllocation] = PerformanceRebalance(ClassesReturns,PerformanceRebalancing,Id);
+                [Rebalance,NewAllocation] = PerformanceRebalance(ClassesReturns,PerformanceRebalancing,Id, ClassID);
                 HarvestingAmmount = 0;
                 MaximumDifference = 0;
         elseif RebalancingRule == 5
-                [Rebalance,NewAllocation] = PortfolioBoundedRebalance(CurrentAllocation, ClassesPVBoundary,Id, ClassesNames);
+                [Rebalance,NewAllocation] = PortfolioBoundedRebalance(CurrentAllocation, ClassesPVBoundary,Id, ClassesNames, ClassID);
                 HarvestingAmmount = 0;
                 MaximumDifference = 0;
         elseif RebalancingRule == 3 

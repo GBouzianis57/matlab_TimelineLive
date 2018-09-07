@@ -1,8 +1,9 @@
-function [Rebalance,ResetAssetAllocation] = PerformanceRebalance(ClassesReturns,PerformanceRebalancing, Id)
+function [Rebalance,ResetAssetAllocation] = PerformanceRebalance(ClassesReturns,PerformanceRebalancing, Id, ClassID)
 
+    ResetAssetAllocation = zeros(1,numel(ClassID));
     if min(ClassesReturns .* PerformanceRebalancing) < 0
          Rebalance=0;
-         ResetAssetAllocation = 0;
+         ResetAssetAllocation(:) = 0;
     else
          Rebalance=1;
 
@@ -14,12 +15,12 @@ function [Rebalance,ResetAssetAllocation] = PerformanceRebalance(ClassesReturns,
             if AllocationReset == 1
                 ResetAssetAllocation = input('Type the new portfolio asset allocation in the form of a mattrix: ');
             else
-                ResetAssetAllocation = 0;
+                ResetAssetAllocation(:) = 0;
             end
             Rebalance = 1;
          else
             Rebalance = 0;
-            ResetAssetAllocation = 0;
+            ResetAssetAllocation(:) = 0;
          end
      
    end

@@ -1,5 +1,6 @@
-function [Rebalance,AllocationReset] = PortfolioBoundedRebalance(CurrentAllocation, ClassesPVBoundary, Id, ClassesNames)
+function [Rebalance,AllocationReset] = PortfolioBoundedRebalance(CurrentAllocation, ClassesPVBoundary, Id, ClassesNames, ClassID)
 
+ResetAssetAllocation = zeros(1,numel(ClassID));
 
 if sum(CurrentAllocation > ClassesPVBoundary) > 0
     Rebalance = 1;
@@ -18,15 +19,15 @@ if sum(CurrentAllocation > ClassesPVBoundary) > 0
         if AllocationReset == 1
             ResetAssetAllocation = input('Type the new portfolio asset allocation in the form of a mattrix: ');
         else
-            ResetAssetAllocation = 0;
+            ResetAssetAllocation(:) = 0;
         end
         Rebalance = 1;
     else
         Rebalance = 0;
-        ResetAssetAllocation = 0;
+        ResetAssetAllocation(:) = 0;
     end
     
 else
     Rebalance = 0;
-    ResetAssetAllocation = 0;
+    ResetAssetAllocation(:) = 0;
 end
