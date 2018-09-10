@@ -1,4 +1,6 @@
-function [Rebalance,ResetAssetAllocation] = TimeRebalance(Frequency,Year,Id)
+function [Rebalance,ResetAssetAllocation] = TimeRebalance(Frequency,Year,Id,ClassID)
+
+ResetAssetAllocation = zeros(1,numel(ClassID));
 
 if mod(Year,Frequency)==0
     Rebalance = 1;
@@ -10,15 +12,17 @@ if mod(Year,Frequency)==0
         if AllocationReset == 1
             ResetAssetAllocation = input('Type the new portfolio asset allocation in the form of a mattrix: ');
         else
-            ResetAssetAllocation = 0;
+            ResetAssetAllocation(:) = 0;
         end
         Rebalance = 1;
     else
         Rebalance = 0;
+        ResetAssetAllocation(:) = 0;
     end
     
 else
     Rebalance = 0;
+    ResetAssetAllocation(:) = 0;
 end
 
 end

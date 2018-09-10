@@ -26,7 +26,7 @@ if  sum(RealStartValue > RealInitialValue)>0
      
     BuyAmount(BuyClasses) = -sum(SellAmount);
      
-    UserDecision = input('Enter 1 to rebalance or 0 not to: ');
+    UserDecision = input('Enter 1 to replenish or 0 not to: ');
     
     if UserDecision == 1
         Rebalance = 1;
