@@ -7,21 +7,21 @@
 
 %ClassesReturns contains the returns of the asset classes
 %ClassesNames contains the names of the asset classes
-[ClassesReturns, ClassesNames] = xlsread('AssetClassesReturnsMonthly','Returns3','D3:K1107'); 
+[ClassesReturns, ClassesNames] = xlsread('BetafolioData','Returns','D3:K95'); 
 
 
 
 %Year
-Year = xlsread('AssetClassesReturnsMonthly','Returns3','C4:C1107'); %Year
+Year = xlsread('BetafolioData','Returns','C4:C95'); %Year
 %Data for the Inflation
-InflationData = xlsread('AssetClassesReturnsMonthly','Returns3','N4:N1107'); 
+InflationData = xlsread('BetafolioData','Returns','L4:L95'); 
 
 
 %InflationData = ((InflationData == 0)*0.000001) + InflationData;
 
 
-MonthNumero = xlsread('AssetClassesReturnsMonthly','Returns3','B4:B1107'); 
-YearNumero = xlsread('AssetClassesReturnsMonthly','Returns3','A4:A1107');
+MonthNumero = xlsread('BetafolioData','Returns','B4:B95'); 
+YearNumero = xlsread('BetafolioData','Returns3','B4:B95');
 
 %Number of Classes that we are using
 NumClasses = size( ClassesReturns, 2);
@@ -331,119 +331,13 @@ end
 
 
 %% IMPLEMENTATION %%
-%The following function does all the calculations
-[WOrder,AllocationGP,CurrentAllocation,ContributionToEveryClass,AdvisoryFee,AnnualSimpleInflationIndex,AnnualAdjustedInflation,CummulativeInflationIndex,HarvestAmmount,WithdrawalFromEveryClass,StartValue,Rebalancing, AdjustedInflation, InflationIndex, SimpleInflationIndex, BeginingBalance, EndBalance, Income, TotalBeginingBalance, TotalEndBalance, TotalIncome,RealEndBalance, RealIncome, PortfolioPercentageReturns,PortfolioRealPercentageReturns] = Calculations (AccountTaxPercentage, IncomeTaxPercentage,ContributionAccount, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,GlidingAdjustment,GlidingEnd,InitialInvestmentAccount,AccountAllocation,WithdrawlAccountDrain,YearsOfData,ClassesReturns,TotalWithdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAccountAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass);
-%The following function calculated the probability of success
-[NominalSR] = SuccessRate(YearsOfWithdrawl,SimpleInflationIndex,LegacyAdjust,LegacyTarget,TotalEndBalance);
-%The following function plots the Real and Nominal Balance / Income
+AllocationGP = cell(1,numel(AccountId));
 
-[SumIncomeAtYear,SumRealIncomeAtYear,RealBalance10thPerc,RealBalance50thPerc,RealBalance90thPerc,SumNominalIncome10thPerc,SumNominalIncome50thPerc,SumNominalIncome90thPerc,SumRealIncome10thPerc,SumRealIncome50thPerc,SumRealIncome90thPerc, CliffEdgeNominalIncome,ComfyNominalIncome,CloudNominalIncome,CliffEdgeRealIncome,ComfyRealIncome,CloudRealIncome,Exhausted10thPerc,Exhausted50thPerc,Balance10thPerc,Balance50thPerc,Balance90thPerc,ExhaustedMin,MedianBalance,PortfolioNominalPosReturns,PortfolioRealPosReturns,PortfolioReturnNominalMean,PortfolioReturnRealMean,PortfolioReturnNominalMax,PortfolioReturnRealMax,PortfolioNominalNegReturns,PortfolioRealNegReturns,PortfolioReturnNominalMin,PortfolioReturnRealMin] = Statistics(SimpleInflationIndex,TotalEndBalance,PortfolioPercentageReturns,PortfolioRealPercentageReturns,TotalIncome,RealIncome, InitialInvestment);
-
-[BalanceAtDesiredYear, RealBalanceAtDesiredYear, IncomeAtDesiredYear, RealIncomeAtDesiredYear]=Plots(SimpleInflationIndex,TotalBeginingBalance,NominalSR,DefaultAge,SumIncomeAtYear,SumRealIncomeAtYear,RealBalance10thPerc,RealBalance50thPerc,RealBalance90thPerc,SumNominalIncome10thPerc,SumNominalIncome50thPerc,SumNominalIncome90thPerc,SumRealIncome10thPerc,SumRealIncome50thPerc,SumRealIncome90thPerc, CliffEdgeNominalIncome,ComfyNominalIncome,CloudNominalIncome,CliffEdgeRealIncome,ComfyRealIncome,CloudRealIncome,Balance10thPerc,Balance50thPerc,Balance90thPerc,YearsOfWithdrawl, RealEndBalance, TotalEndBalance, TotalIncome, RealIncome, InitialInvestment);
-
-ReusltsMatrix{1,1}='Year';
-ReusltsMatrix{1,2}='SR';
-ReusltsMatrix{1,3}='10th Percentile Balance';
-ReusltsMatrix{1,4}='50th Percentile Balance';
-ReusltsMatrix{1,5}='10th Percentile Real Balance';
-ReusltsMatrix{1,6}='50th Percentile Real Balance';
-ReusltsMatrix{1,7}='Exhausted 10th Percentile';
-ReusltsMatrix{1,8}='Exhausted 50th Percentile';
-ReusltsMatrix{1,9}='Exhausted Min';
-ReusltsMatrix{1,10}='Nominal Min Portfolio Return';
-ReusltsMatrix{1,11}='Real Min Portfolio Return';
-ReusltsMatrix{1,12}='Nominal Max Portfolio Return';
-ReusltsMatrix{1,13}='Real Max Portfolio Return';
-ReusltsMatrix{1,14}='Nominal Mean Portfolio Return';
-ReusltsMatrix{1,15}='Real Mean Portfolio Return';
-ReusltsMatrix{1,16}='Nominal Portfolio Positive Returns Percentage ';
-ReusltsMatrix{1,17}='Real Portfolio Positive Returns Percentage ';
-ReusltsMatrix{1,18}='Nominal Portfolio Negative Returns Percentage ';
-ReusltsMatrix{1,19}='Real Portfolio Negative Returns Percentage ';
-ReusltsMatrix{1,20}='Nominal Income Cliff Edge Scenario';
-ReusltsMatrix{1,21}='Nominal Income Comfy Scenario';
-ReusltsMatrix{1,22}='Nominal Income Cloud 9 Scenario';
-ReusltsMatrix{1,23}='Real Income Cliff Edge Scenario';
-ReusltsMatrix{1,24}='Real Income Comfy Scenario';
-ReusltsMatrix{1,25}='Real Income Cloud 9 Scenario';
-ReusltsMatrix{1,26}='Total Nominal Income 10th Perc';
-ReusltsMatrix{1,27}='Total Nominal Income 50th Perc';
-ReusltsMatrix{1,28}='Total Nominal Income 90th Perc';
-ReusltsMatrix{1,29}='Total Real Income 10th Perc';
-ReusltsMatrix{1,30}='Total Real Income 50th Perc';
-ReusltsMatrix{1,31}='Total Real Income 90th Perc';
-
-ReusltsMatrix{2,1} = 20;
-ReusltsMatrix{3,1} = 25;
-ReusltsMatrix{4,1} = 30;
-ReusltsMatrix{5,1} = 35;
-ReusltsMatrix{6,1} = 40;
-%ReusltsMatrix{7,1} = YearsOfWithdrawl;
-
-for i = 2:31
-    for j = 2:6
-        if i==2
-            ReusltsMatrix{j,i} = NominalSR(ReusltsMatrix{j,1}*12);
-        elseif i==3
-            ReusltsMatrix{j,i} = Balance10thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==4
-            ReusltsMatrix{j,i} = Balance50thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==5
-            ReusltsMatrix{j,i} = RealBalance10thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==6
-            ReusltsMatrix{j,i} = RealBalance50thPerc(ReusltsMatrix{j,1}*12);   
-        elseif i==7
-            ReusltsMatrix{j,i} = Exhausted10thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==8
-            ReusltsMatrix{j,i} = Exhausted50thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==9
-            ReusltsMatrix{j,i} = ExhaustedMin(ReusltsMatrix{j,1}*12);
-        elseif i==10
-            ReusltsMatrix{j,i} = PortfolioReturnNominalMin(ReusltsMatrix{j,1}*12);
-        elseif i==11
-            ReusltsMatrix{j,i} = PortfolioReturnRealMin(ReusltsMatrix{j,1}*12);
-        elseif i==12
-            ReusltsMatrix{j,i} = PortfolioReturnNominalMax(ReusltsMatrix{j,1}*12);
-        elseif i==13
-            ReusltsMatrix{j,i} = PortfolioReturnRealMax(ReusltsMatrix{j,1}*12);
-        elseif i==14
-            ReusltsMatrix{j,i} = PortfolioReturnNominalMean(ReusltsMatrix{j,1}*12);
-        elseif i==15
-            ReusltsMatrix{j,i} = PortfolioReturnRealMean(ReusltsMatrix{j,1}*12);
-        elseif i==16
-            ReusltsMatrix{j,i} = PortfolioNominalPosReturns(ReusltsMatrix{j,1}*12);
-        elseif i==17
-            ReusltsMatrix{j,i} = PortfolioRealPosReturns(ReusltsMatrix{j,1}*12);
-        elseif i==18
-            ReusltsMatrix{j,i} = PortfolioNominalNegReturns(ReusltsMatrix{j,1}*12);
-        elseif i==19
-            ReusltsMatrix{j,i} = PortfolioRealNegReturns(ReusltsMatrix{j,1}*12);
-        elseif i==20
-            ReusltsMatrix{j,i} = CliffEdgeNominalIncome(ReusltsMatrix{j,1}*12);
-        elseif i==21
-            ReusltsMatrix{j,i} = ComfyNominalIncome(ReusltsMatrix{j,1}*12);
-        elseif i==22
-            ReusltsMatrix{j,i} = CloudNominalIncome(ReusltsMatrix{j,1}*12);
-        elseif i==23
-            ReusltsMatrix{j,i} = CliffEdgeRealIncome(ReusltsMatrix{j,1}*12);
-        elseif i==24
-            ReusltsMatrix{j,i} = ComfyRealIncome(ReusltsMatrix{j,1}*12);
-        elseif i==25    
-            ReusltsMatrix{j,i} = CloudRealIncome(ReusltsMatrix{j,1}*12);
-        elseif i==26    
-            ReusltsMatrix{j,i} = SumNominalIncome10thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==27    
-            ReusltsMatrix{j,i} = SumNominalIncome50thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==28    
-            ReusltsMatrix{j,i} = SumNominalIncome90thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==29    
-            ReusltsMatrix{j,i} = SumRealIncome10thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==30    
-            ReusltsMatrix{j,i} = SumRealIncome50thPerc(ReusltsMatrix{j,1}*12);
-        elseif i==31    
-            ReusltsMatrix{j,i} = SumRealIncome90thPerc(ReusltsMatrix{j,1}*12);
-        end
-        
-    end
+for Account = AccountId
+%We calculate the gliding path adjusted allocation of every class in every portfolio each month for every scenario.
+%NOTE THAT FOR EVERY PORTFOLIO WE GIVE DIFFERENT INPUT VALUES.
+AllocationGP{Account} = AdjustingGlidingPath(ClassesReturns(:,:),InitialPercentageAllocation(Account,:),GlidingAdjustment(Account,:),GlidingEnd(Account,:)); 
 end
+
+[WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,ContributionAccount, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAccount,AccountAllocation,WithdrawlAccountDrain,ClassesReturns,TotalWithdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAccountAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) ;
 
