@@ -7,21 +7,21 @@
 
 %ClassesReturns contains the returns of the asset classes
 %ClassesNames contains the names of the asset classes
-[ClassesReturns, ClassesNames] = xlsread('BetafolioData','Returns','D3:K95'); 
+[ClassesReturns, ClassesNames] = xlsread('BetafolioData','Returns','D3:K15'); 
 
 
 
 %Year
-Year = xlsread('BetafolioData','Returns','C4:C95'); %Year
+Year = xlsread('BetafolioData','Returns','C4:C15'); %Year
 %Data for the Inflation
-InflationData = xlsread('BetafolioData','Returns','L4:L95'); 
+InflationData = xlsread('BetafolioData','Returns','L4:L15'); 
 
 
 %InflationData = ((InflationData == 0)*0.000001) + InflationData;
 
 
-MonthNumero = xlsread('BetafolioData','Returns','B4:B95'); 
-YearNumero = xlsread('BetafolioData','Returns','A4:A95');
+MonthNumero = xlsread('BetafolioData','Returns','B4:B15'); 
+YearNumero = xlsread('BetafolioData','Returns','A4:A15');
 
 %Number of Classes that we are using
 NumClasses = size( ClassesReturns, 2);
