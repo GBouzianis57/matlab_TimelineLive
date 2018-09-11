@@ -370,6 +370,9 @@ for i=1:size(ClassesReturns,1)
             [NewAllocation{Id}(i,:), Rebalancing(i,Id) , HarvestAmount{Id}(i,:) , maxDiff(Id,i)] = RebalancingDetermination(RebalancingRule(Id), AllocationGP{Id}(i,:), ClassesBoundaries(Id,:), Frequency(Id), ClassesReturns(i,:), PerformanceRebalancing(Id,:), CurrentAllocation{Id}(i,:), ClassesPVBoundary(Id,:), SimpleInflationIndex,InitialAllocation(Id,:),BuyClasses(Id),StartValue{Id}(i,1:end-1),ClassID,SellClasses(Id,:),IIDifference(Id),i,Id,ClassesNames) ;
         end
     end
+    
+    comet(TotalEndBalance(1:i));
+    
 end
 
 end
