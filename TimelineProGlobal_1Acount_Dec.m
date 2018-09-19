@@ -197,7 +197,7 @@ WithdrawlRule = 0;  % -IN
 %in a given order. If the user choose to invest in two accounts instead of
 %three then this variable will be WithdrawlOrder = [x y];
 
-WithdrawlOrder = 4; % -IN
+WithdrawlOrder = 0; % -IN
 
 %Setting the preferences for the withdrawl order for every account
 
@@ -221,7 +221,7 @@ WithdrawlOrder = 4; % -IN
 % 3 for Harvesting rule, 4 for class boundary rebalancing and 5 for portfolio percentage allocation
 % Again if the user choose to invest in two accounts rather than in three
 % then the variable will be RebalancingRule = [x y].
-RebalancingRule = 2;  % - IN 
+RebalancingRule = 3;  % - IN 
 
 %Setting the rebalancing preferences
 
@@ -254,7 +254,7 @@ RebalancingRule = 2;  % - IN
     % chooses 0 for one of those the he will sell only from one class. In
     % that case. Again if the user invests in two accounts then the variable would 
     %be SellClasses = [x y; z k];
-    SellClasses = [1 0]; % -IN
+    SellClasses = [1 3]; % -IN
     
     %Then the user must choose from which class to buy. If the user selects
     %this rule he must definately choose a class to buy. 0 is not permitted
@@ -263,7 +263,7 @@ RebalancingRule = 2;  % - IN
     
     %For the harvesting rule, the user must set for every class that he dicedes to sell
     %an upper limit in real terms. It must be always greater than 1 (100%)
-    IIDifference = 1.2; % -IN
+    IIDifference = 1.1; % -IN
     
  %elseif RebalancingRule == 4
     
@@ -334,6 +334,6 @@ for Account = AccountId
 AllocationGP{Account} = AdjustingGlidingPath(ClassesReturns(:,:),InitialPercentageAllocation(Account,:),GlidingAdjustment(Account,:),GlidingEnd(Account,:)); 
 end
 
-[WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,ContributionAccount, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAccount,AccountAllocation,WithdrawlAccountDrain,ClassesReturns,TotalWithdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAccountAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) ;
+[TotalAccountFee,WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,ContributionAccount, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAccount,AccountAllocation,WithdrawlAccountDrain,ClassesReturns,TotalWithdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAccountAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) ;
 
 

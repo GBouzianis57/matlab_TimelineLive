@@ -9,16 +9,19 @@ RealInitialValue = ((InitialAllocation .* SellingClasses));
 SellAmount = zeros (1,size(InitialAllocation,2));
 BuyAmount = zeros (1,size(InitialAllocation,2));
  
+if  sum(RealStartValue > IIDifference* RealInitialValue)>0
+    Rebalance = 1;
+    
      for Class = SellClasses
       if Class~= 0
         if  RealStartValue(Class) > IIDifference * RealInitialValue(Class)
             SellAmount(Class) = -(IIDifference-1)*RealInitialValue(Class);
             fprintf('It is time to rebalance your portfolio number %d. You need to replenish %s with %f pounds from %s. ', Id, ClassesNames{BuyClasses},SellAmount(Class), ClassesNames{Class});
-            UserDecision = input('Enter 1 to replenish or 0 not to: ');
         end
       end
      end
-     
+    UserDecision = input('Enter 1 to replenish or 0 not to: ');
+    
     BuyAmount(BuyClasses) = -sum(SellAmount);
     
     if UserDecision == 1
@@ -29,7 +32,12 @@ BuyAmount = zeros (1,size(InitialAllocation,2));
             Rebalance = 0;
             Amount = 0;
     end
-         
+        
+else
+    
+     Rebalance = 0;
+            Amount = 0;
+    
 
 end
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
