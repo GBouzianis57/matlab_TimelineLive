@@ -1,4 +1,4 @@
-function [WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,Contribution, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAcc,AccAllocation,WithdrawlAccountDrain,ClassesReturns,Withdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) 
+function [TotalAccountFee,WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,Contribution, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAcc,AccAllocation,WithdrawlAccountDrain,ClassesReturns,Withdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) 
 
 %Returns and Rebalancing excel tab
 Rebalancing = zeros(size(ClassesReturns,1),numel(AccountId));
@@ -333,12 +333,12 @@ for i=1:size(ClassesReturns,1)
             else
                 if WithdrawlRule == 0
                     %Income Withdrawal with Inflation Rule
-                    TotalIncome(i) = AdjustedIncomeInflation ( TotalIncome(i-1), AnnualAdjustedInflation(i), TotalBeginingBalance(i), TotalFee(i));
+                    TotalIncome(i) = AdjustedIncomeInflation ( TotalIncome(i-1), AnnualAdjustedInflation(i), TotalBeginingBalance(i), TotalFee(i),i);
                 elseif WithdrawlRule == 1
                     TotalIncome(i) = AdjustedIncomeGuardrails ( i, WithdrawlRate, TotalIncome(i-1), AnnualAdjustedInflation(i), TotalBeginingBalance(i), TotalFee(i) , PRTrigger,PRSpendingChange,CPTrigger,CPSpendingChange,CPUse,PRUse);
                 elseif WithdrawlRule == 2
                     [CountSuccess(i),RatchetingSuccess(i)] = AdjustedIncomeRatchetingYearsCounter (i,TotalBeginingBalance(i), WealthTreashold, InitialInvestment, YearsTarget, CountSuccess(i-1));
-                    TotalIncome(i) = AdjustedIncomeRatcheting (TotalFee(i),TotalBeginingBalance(i),RachetingSpendingChange,TotalIncome(i-1),AnnualAdjustedInflation(i),RatchetingSuccess(i));
+                    TotalIncome(i) = AdjustedIncomeRatcheting (i,TotalFee(i),TotalBeginingBalance(i),RachetingSpendingChange,TotalIncome(i-1),AnnualAdjustedInflation(i),RatchetingSuccess(i));
                 elseif WithdrawlRule == 3  
                     TotalIncome(i) = AdjustedIncomeFloorCeiling (TotalIncome(i-1),i,AnnualAdjustedInflation(i),TotalFee(i),Withdrawl,TotalBeginingBalance(i),Floor,Ceiling);
                 end
@@ -346,12 +346,12 @@ for i=1:size(ClassesReturns,1)
         else
             if WithdrawlRule == 0
                 %Income Withdrawal with Inflation Rule
-                TotalIncome(i) = AdjustedIncomeInflation ( TotalIncome(i-1), AnnualAdjustedInflation(i), TotalBeginingBalance(i), TotalFee(i));
+                TotalIncome(i) = AdjustedIncomeInflation ( TotalIncome(i-1), AnnualAdjustedInflation(i), TotalBeginingBalance(i), TotalFee(i),i);
             elseif WithdrawlRule == 1
                 TotalIncome(i) = AdjustedIncomeGuardrails ( i, WithdrawlRate, TotalIncome(i-1), AnnualAdjustedInflation(i), TotalBeginingBalance(i), TotalFee(i) , PRTrigger,PRSpendingChange,CPTrigger,CPSpendingChange,CPUse,PRUse);
             elseif WithdrawlRule == 2
                 [CountSuccess(i),RatchetingSuccess(i)] = AdjustedIncomeRatchetingYearsCounter (i,TotalBeginingBalance(i), WealthTreashold, InitialInvestment, YearsTarget, CountSuccess(i-1));
-                TotalIncome(i) = AdjustedIncomeRatcheting (TotalFee(i),TotalBeginingBalance(i),RachetingSpendingChange,TotalIncome(i-1),AnnualAdjustedInflation(i),RatchetingSuccess(i));
+                TotalIncome(i) = AdjustedIncomeRatcheting (i,TotalFee(i),TotalBeginingBalance(i),RachetingSpendingChange,TotalIncome(i-1),AnnualAdjustedInflation(i),RatchetingSuccess(i));
             elseif WithdrawlRule == 3  
                 TotalIncome(i) = AdjustedIncomeFloorCeiling (TotalIncome(i-1),i,AnnualAdjustedInflation(i),TotalFee(i),Withdrawl,TotalBeginingBalance(i),Floor,Ceiling);
             end

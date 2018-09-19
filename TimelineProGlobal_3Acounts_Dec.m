@@ -7,21 +7,21 @@
 
 %ClassesReturns contains the returns of the asset classes
 %ClassesNames contains the names of the asset classes
-[ClassesReturns, ClassesNames] = xlsread('BetafolioData','Returns','D3:K15'); 
+[ClassesReturns, ClassesNames] = xlsread('BetafolioData','Returns','D3:K95'); 
 
 
 
 %Year
-Year = xlsread('BetafolioData','Returns','C4:C15'); %Year
+Year = xlsread('BetafolioData','Returns','C4:C95'); %Year
 %Data for the Inflation
-InflationData = xlsread('BetafolioData','Returns','L4:L15'); 
+InflationData = xlsread('BetafolioData','Returns','L4:L95'); 
 
 
 %InflationData = ((InflationData == 0)*0.000001) + InflationData;
 
 
-MonthNumero = xlsread('BetafolioData','Returns','B4:B15'); 
-YearNumero = xlsread('BetafolioData','Returns','A4:A15');
+MonthNumero = xlsread('BetafolioData','Returns','B4:B95'); 
+YearNumero = xlsread('BetafolioData','Returns','A4:A95');
 
 %Number of Classes that we are using
 NumClasses = size( ClassesReturns, 2);
@@ -51,8 +51,8 @@ TotalWithdrawl = 8000/12;
 
 %Scaled Income for different retirement phases
 Scale = 1;
-ScaleIncome = [4000/12 3000/12];
-ScaleIncomeAge = [75 85];
+ScaleIncome = [5000/12 4000/12];
+ScaleIncomeAge = [67 70];
 ScaleIncomeAdjusted = 1; % 1 or 0 to adjust scale income for inflation or not
 
 ScaleInflation = 1; % 1 or to 0 to change the inflation rule for the different income scale
@@ -338,5 +338,5 @@ for Account = AccountId
 AllocationGP{Account} = AdjustingGlidingPath(ClassesReturns(:,:),InitialPercentageAllocation(Account,:),GlidingAdjustment(Account,:),GlidingEnd(Account,:)); 
 end
 
-[WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,ContributionAccount, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAccount,AccountAllocation,WithdrawlAccountDrain,ClassesReturns,TotalWithdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAccountAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) ;
+[TotalAccountFee,WOrder,ContributionToEveryClass,AnnualSimpleInflationIndex,AnnualAdjustedInflation,AnnualInflationData,Rebalancing, StartValue, CurrentAllocation, AdjustedInflation, InflationIndex, BeginingBalance, IncomeFromAccount, EndBalance, HarvestAmount, AdvisoryFee,WithdrawalFromEveryClass,SimpleInflationIndex, OldLevels,TotalBeginingBalance,TotalEndBalance,TotalIncome] = calc(AccountTaxPercentage, IncomeTaxPercentage,ContributionAccount, ContributionStartAge, ContributionAmmount, ContributionAdjust,ChargeAdjust,Charge,ScaleInflation, ScaleWithdrawl, ScaleWithdrawlRule, ScaleInflationRule,CurrentAge,Scale,ScaleIncome, ScaleIncomeAge, ScaleIncomeAdjusted,ClassID,InitialInvestmentAccount,AccountAllocation,WithdrawlAccountDrain,ClassesReturns,TotalWithdrawl,WithdrawlOrder,DrainOrder,OngoingCharge,WithdrawlRule,Cap,PercentageAdjusted,Collar ,InflationRule,AllocationGP,ClassesPVBoundary,SellClasses,BuyClasses,IIDifference,InflationData,RebalancingRule,PerformanceRebalancing,InitialInvestment,Frequency,InitialAccountAllocation,ClassesBoundaries, InitialPercentageAllocation, WithdrawlRate,PRTrigger,PRSpendingChange,PRUse,CPTrigger,CPSpendingChange,CPUse, WealthTreashold,RachetingSpendingChange,Floor,Ceiling,AccountId,YearsTarget, DrainOrderBuckets, DefaultClass, ClassesNames) ;
 
