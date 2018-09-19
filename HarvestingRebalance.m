@@ -1,32 +1,25 @@
-function [Rebalance, Amount] = HarvestingRebalance(InflationData,InitialAllocation,BuyClasses,StartValue,ClassID,SellClasses,IIDifference,Year, Id, ClassesNames)
+function [Rebalance, Amount] = HarvestingRebalance(InitialAllocation,BuyClasses,StartValue,ClassID,SellClasses,IIDifference, Id, ClassesNames)
 
 SellingClasses = (ClassID == SellClasses(1)) | (ClassID == SellClasses(2));
 
-BuyingClasses = (ClassID == BuyClasses);
-
-RealStartValue = (StartValue .* SellingClasses) / InflationData(Year);
+RealStartValue = (StartValue .* SellingClasses);
       
-RealInitialValue = IIDifference* ((InitialAllocation .* SellingClasses) / InflationData(1));
-
-if  sum(RealStartValue > RealInitialValue)>0
-    
-    SellAmount = zeros (1,size(InitialAllocation,2));
-    BuyAmount = zeros (1,size(InitialAllocation,2));
-    
-    Rebalance = 1;
-    
+RealInitialValue = ((InitialAllocation .* SellingClasses));
+  
+SellAmount = zeros (1,size(InitialAllocation,2));
+BuyAmount = zeros (1,size(InitialAllocation,2));
+ 
      for Class = SellClasses
       if Class~= 0
-        if  (StartValue(Class)/ InflationData(Year)) > IIDifference * (InitialAllocation(Class) / InflationData(1))
-            fprintf('It is time to rebalance your portfolio number %d. You need to replenish %s with %f pounds from %s. ', Id, ClassesNames{BuyClasses}, (StartValue(Class)/ InflationData(Year))-(IIDifference * (InitialAllocation(Class) / InflationData(1))), ClassesNames{Class});
-            SellAmount(Class) = -InflationData(Year)*(IIDifference-1)*(StartValue(Class)) / InflationData(Year);         
+        if  RealStartValue(Class) > IIDifference * RealInitialValue(Class)
+            SellAmount(Class) = -(IIDifference-1)*RealInitialValue(Class);
+            fprintf('It is time to rebalance your portfolio number %d. You need to replenish %s with %f pounds from %s. ', Id, ClassesNames{BuyClasses},SellAmount(Class), ClassesNames{Class});
+            UserDecision = input('Enter 1 to replenish or 0 not to: ');
         end
       end
      end
      
     BuyAmount(BuyClasses) = -sum(SellAmount);
-     
-    UserDecision = input('Enter 1 to replenish or 0 not to: ');
     
     if UserDecision == 1
         Rebalance = 1;
@@ -37,9 +30,7 @@ if  sum(RealStartValue > RealInitialValue)>0
             Amount = 0;
     end
          
-else
-    Rebalance = 0;
-    Amount = 0;
+
 end
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 

@@ -81,7 +81,7 @@ end
                 HarvestingAmmount = 0;
                 MaximumDifference = 0;
         elseif RebalancingRule == 3 
-                [Rebalance,HarvestingAmmount] = HarvestingRebalance(SimpleInflationIndex,InitialAllocation,BuyClasses,StartValue,ClassID,SellClasses,IIDifference,i,Id, ClassesNames);     
+                [Rebalance,HarvestingAmmount] = HarvestingRebalance(InitialAllocation,BuyClasses,StartValue,ClassID,SellClasses,IIDifference,Id, ClassesNames);     
                 MaximumDifference = 0;
                 NewAllocation =0;
         end
