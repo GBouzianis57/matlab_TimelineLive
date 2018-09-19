@@ -21,7 +21,7 @@ InflationData = xlsread('BetafolioData','Returns','L4:L95');
 
 
 MonthNumero = xlsread('BetafolioData','Returns','B4:B95'); 
-YearNumero = xlsread('BetafolioData','Returns3','B4:B95');
+YearNumero = xlsread('BetafolioData','Returns','A4:A95');
 
 %Number of Classes that we are using
 NumClasses = size( ClassesReturns, 2);
